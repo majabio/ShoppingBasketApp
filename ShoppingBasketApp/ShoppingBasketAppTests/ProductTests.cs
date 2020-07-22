@@ -27,5 +27,10 @@ namespace ShoppingBasketAppTests
 			Assert.AreEqual(milk.Price, 1.15);
 			Assert.AreEqual(butter.Price, 0.8);
 		}
+
+		//TODO: Tests for price out of range
+
+		
+
 	}
 }
