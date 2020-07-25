@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ShoppingBasketAppTests
@@ -7,8 +8,11 @@ namespace ShoppingBasketAppTests
 	public class InfoLoggerTests
 	{
 		[TestMethod]
-		public void TestMethod1()
+		public void LoggerLogsString()
 		{
+			InfoLogger logger(Stream stream);
+			string test = "Please log me";
+			logger.log(test);
 		}
 	}
 }
