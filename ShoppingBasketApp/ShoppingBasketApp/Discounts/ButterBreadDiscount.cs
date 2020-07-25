@@ -12,7 +12,7 @@ namespace ShoppingBasketApp
 
 		public DiscountType Type { get; set; }
 
-		public void Apply(IEnumerable<IProduct> products)
+		public double Apply(IEnumerable<IProduct> products)
 		{
 			throw new NotImplementedException();
 		}

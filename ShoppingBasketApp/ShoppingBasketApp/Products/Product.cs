@@ -8,23 +8,25 @@ namespace ShoppingBasketApp
 {
 	class Product : IProduct
 	{
-		Product(ProductType type )
+		public Product(ProductType type, double price)
 		{
 			Type = type;
+			Price = price;
 		}
 
 		private double price;
 		private const double min_price = 0.0;
 		public ProductType Type { get; set; }
-		public double Price 
-		{ 
+		public double Price
+		{
 			get { return price; }
-			set 
+			set
 			{
 				if (price == value || price < min_price)
 					return;
 				price = value;
-			} 
+			}
 		}
+		public int Count { get; set; }
 	}
 }

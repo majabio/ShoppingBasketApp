@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace ShoppingBasketApp
 {
@@ -12,9 +12,10 @@ namespace ShoppingBasketApp
 		}
 		public DiscountType Type { get; set; }
 
-		public void Apply(IEnumerable<IProduct> products)
+		public double Apply(IEnumerable<IProduct> products)
 		{
-			throw new NotImplementedException();
+
+			return 0.0;
 		}
 	}
 }
