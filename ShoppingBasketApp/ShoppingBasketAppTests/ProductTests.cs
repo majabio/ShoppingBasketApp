@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using ShoppingBasketApp;
 
 namespace ShoppingBasketAppTests
 {
@@ -9,9 +9,9 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void ConstructorSetsTheCorrectValueForTypeProperty()
 		{
-			Product bread = new Product(ProductType.Bread);
-			Product milk = new Product(ProductType.Milk);
-			Product butter = new Product(ProductType.Butter);
+			Product bread = new Product(ProductType.Bread, 1.0);
+			Product milk = new Product(ProductType.Milk, 1.15);
+			Product butter = new Product(ProductType.Butter, 0.8);
 			Assert.AreEqual(bread.Type, ProductType.Bread);
 			Assert.AreEqual(milk.Type, ProductType.Milk);
 			Assert.AreEqual(butter, ProductType.Butter);
@@ -28,9 +28,15 @@ namespace ShoppingBasketAppTests
 			Assert.AreEqual(butter.Price, 0.8);
 		}
 
-		//TODO: Tests for price out of range
-
-		
-
+		[TestMethod]
+		public void ItIsNotPossibleToSetNegativePriceValue()
+		{
+			Product bread = new Product(ProductType.Bread, -1.0);
+			Product milk = new Product(ProductType.Milk, -1.15);
+			Product butter = new Product(ProductType.Butter, -0.8);
+			Assert.AreEqual(bread.Price, 0.0);
+			Assert.AreEqual(milk.Price, 0.0);
+			Assert.AreEqual(butter.Price, 0.0);
+		}
 	}
 }

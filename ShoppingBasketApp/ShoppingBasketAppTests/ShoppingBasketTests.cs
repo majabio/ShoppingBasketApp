@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+using ShoppingBasketApp;
+using System.Linq;
 
 namespace ShoppingBasketAppTests
 {
@@ -9,47 +10,40 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void ShoppingBasketConstructorCreatesEmptyBasket()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			var products = basket.Products;
-			Assert.AreEqual(products.Count, 0);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			Assert.AreEqual(basket.Products.Count(), 0);
 		}
 
 		[TestMethod]
 		public void ShoppingBasketConstructorCreatesBasketWithoutDiscounts()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
+			ShoppingBasket basket = new ShoppingBasket(null);
 			var discounts = basket.Discounts;
-			Assert.AreEqual(discounts.Count, 0);
+			Assert.AreEqual(basket.Discounts.Count(), 0);
 		}
 
 		[TestMethod]
 		public void CreateProductAddsProductToTheBasket()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread);
-			var products = basket.Products;
-			Assert.IsTrue(products.Any(p => p.Type == ProductType.Bread));
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
+			Assert.IsTrue(basket.Products.Any(p => p.Type == ProductType.Bread));
 		}
 
 		[TestMethod]
 		public void DeleteProductDeletesProductFromTheBasket()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.DeleteProduct(ProductType.Bread);
-			Assert.IsFalse(products.Any(p => p.Type == ProductType.Bread));
+			Assert.IsFalse(basket.Products.Any(p => p.Type == ProductType.Bread));
 		}
 
 		[TestMethod]
 		public void AddProductIncrementsProductCount()
-		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+		{ 
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
 			Assert.AreEqual(product.Count, 1);
@@ -58,9 +52,8 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void AddMultipleProductsIncrementsProductCount()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread, 2);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
 			Assert.AreEqual(product.Count, 2);
@@ -69,9 +62,8 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void AddProductUpdatesTotalSum()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
 			Assert.AreEqual(basket.TotalSum, 0.8);
@@ -80,9 +72,8 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void RemoveProductDecrementsProductCount()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread);
 			basket.RemoveProduct(ProductType.Bread);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
@@ -92,9 +83,8 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void RemoveMultipleProductsDecrementesProductCount()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread, 2);
 			basket.RemoveProduct(ProductType.Bread, 2);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
@@ -104,9 +94,8 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void RemoveMultipleProductsDoesNothingIfMoreProductsThanThatExistTriesToBeRemoved()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread, 2);
 			basket.RemoveProduct(ProductType.Bread, 5);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
@@ -116,9 +105,8 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void RemoveProductUpdatesTotalSum()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			basket.CreateProduct(ProductType.Bread, 0.8);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread);
 			basket.RemoveProduct(ProductType.Bread);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
@@ -128,27 +116,21 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void AddDiscountAddsDiscountToTheBasket()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			IDiscount milkDiscount = new Discount(DiscountType.MilkDiscount);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			IDiscount milkDiscount = new MilkDiscount();
 			basket.AddDiscount(milkDiscount);
-			var discounts = basket.Discounts;
-			Assert.IsTrue(discounts.Contains(milkDiscount));
+			Assert.IsTrue(basket.Discounts.Contains(milkDiscount));
 		}
 
 		[TestMethod]
 		public void RemoveDiscountRemovesDiscountFromTheBasket()
 		{
-			ILogger logger = new InfoLogger();
-			ShoppingBasket basket = new ShoppingBasket(IInfoLogger logger);
-			IDiscount milkDiscount = new Discount(DiscountType.Milk);
+			ShoppingBasket basket = new ShoppingBasket(null);
+			IDiscount milkDiscount = new MilkDiscount();
 			basket.AddDiscount(milkDiscount);
 			basket.RemoveDiscount(DiscountType.Milk);
-			var discounts = basket.Discounts;
-			Assert.IsFalse(discounts.Contains(milkDiscount));
+			Assert.IsFalse(basket.Discounts.Contains(milkDiscount));
 		}
-
-		//TODO: Tests for Calculation
 
 
 	}

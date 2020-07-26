@@ -10,8 +10,13 @@ namespace ShoppingBasketApp
 	{
 		private HashSet<IProduct> products;
 		private List<IDiscount> discounts;
-		private double totalSum;
 		private InfoLogger logger;
+
+		internal IEnumerable<IProduct> Products { get;}
+
+		internal IEnumerable<IDiscount> Discounts { get; }
+
+		internal double TotalSum { get; private set; }
 
 		internal ShoppingBasket(InfoLogger logger) 
 		{
@@ -26,7 +31,7 @@ namespace ShoppingBasketApp
 			if (null == product || count < 1)
 				return;
 			product.Count += count;
-			totalSum += count * product.Price;
+			TotalSum += count * product.Price;
 		}
 
 		internal void RemoveProduct(ProductType type, int count = 1)
@@ -35,7 +40,7 @@ namespace ShoppingBasketApp
 			if (null == product || count < 1 || count > product.Count)
 				return;
 			product.Count -= count;
-			totalSum -= count * product.Price;
+			TotalSum -= count * product.Price;
 		}
 
 		internal void AddDiscount(IDiscount discount)
@@ -67,15 +72,15 @@ namespace ShoppingBasketApp
 		internal void ProcessOrder()
 		{
 			foreach (IProduct product in products)
-				logger.Log(product.Type.ToString() + " " + product.Count + " " + product.Price + "\n");
-			logger.Log(totalSum.ToString());
+				logger?.Log(product.Type.ToString() + " " + product.Count + " " + product.Price + "\n");
+			logger?.Log(TotalSum.ToString());
 			foreach (IDiscount discount in discounts)
 			{
 				var discountResult = discount.Apply(products);
-				logger.Log("\n" + discount.Type.ToString() + "" + "-" + discountResult);
-				totalSum -= discountResult;
+				logger?.Log("\n" + discount.Type.ToString() + "" + "-" + discountResult);
+				TotalSum -= discountResult;
 			}
-			logger.Log("\n" + totalSum.ToString());
+			logger?.Log("\n" + TotalSum.ToString());
 			
 		}
 

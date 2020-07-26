@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ShoppingBasketApp;
 
 namespace ShoppingBasketAppTests
 {
@@ -14,63 +13,65 @@ namespace ShoppingBasketAppTests
 			IDiscount milkDiscount = new MilkDiscount();
 			IDiscount butterBreadDiscount = new ButterBreadDiscount();
 			Assert.AreEqual(milkDiscount.Type, DiscountType.Milk);
-			Assert.AreEqual(butterBreadDiscount.Type, DiscountType.Bread);
+			Assert.AreEqual(butterBreadDiscount.Type, DiscountType.ButterBread);
 		}
 
 
 		[TestMethod]
 		public void TestApplyButterBreadDiscountForTwoButtersAndOneBread()
-		{
-			List<IProducts> products = new List<IProducts>() { new Product(ProductType.Butter, 0.8),
-																new Product(ProductType.Bread, 1.0),
-																new Product(ProductType.Butter, 0.8)};
+		{ 
+			IProduct butter = new Product(ProductType.Butter, 0.8);
+			butter.Count = 2;
+			IProduct bread = new Product(ProductType.Bread, 1.0);
+			bread.Count = 1;
+			HashSet<IProduct> products = new HashSet<IProduct>() { butter, bread };
+
 			IDiscount butterBreadDiscount = new ButterBreadDiscount();
 			double result = butterBreadDiscount.Apply(products);
-			Assert.AreEqual(result, -0.5);
+			Assert.AreEqual(result, 0.5);
 		}
 
 		[TestMethod]
 		public void TestApplyButterBreadDiscountForTwoButtersAndTwoBreads()
 		{
-			List<IProducts> products = new List<IProducts>() { new Product(ProductType.Butter, 0.8),
-																new Product(ProductType.Bread, 1.0),
-																new Product(ProductType.Butter, 0.8),
-																new Product(ProductType.Bread, 1.0)};
+			IProduct butter = new Product(ProductType.Butter, 0.8, 2);
+			IProduct bread = new Product(ProductType.Bread, 1.0, 2);
+			HashSet<IProduct> products = new HashSet<IProduct>() { butter, bread };
+
 			IDiscount butterBreadDiscount = new ButterBreadDiscount();
 			double result = butterBreadDiscount.Apply(products);
-			Assert.AreEqual(result, -0.5);
+			Assert.AreEqual(result, 0.5);
 		}
 
 		[TestMethod]
 		public void TestApplyButterBreadDiscountForThreeButtersAndOneBread()
 		{
-			List<IProducts> products = new List<IProducts>() { new Product(ProductType.Butter, 0.8),
-																new Product(ProductType.Bread, 1.0),
-																new Product(ProductType.Butter, 0.8),
-																new Product(ProductType.Bread, 1.0)};
+			IProduct butter = new Product(ProductType.Butter, 0.8, 3);
+			IProduct bread = new Product(ProductType.Bread, 1.0, 1);
+			HashSet<IProduct> products = new HashSet<IProduct>() { butter, bread };
+
 			IDiscount butterBreadDiscount = new ButterBreadDiscount();
 			double result = butterBreadDiscount.Apply(products);
-			Assert.AreEqual(result, -0.5);
+			Assert.AreEqual(result, 0.5);
 		}
 
 		[TestMethod]
 		public void TestApplyMilkDiscountForFourMilks()
 		{
-			List<IProducts> products = new List<IProducts>() { new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15), 
-																new Product(ProductType.Milk, 1.15)};
+			IProduct milk = new Product(ProductType.Milk, 1.15, 4);
+			HashSet<IProduct> products = new HashSet<IProduct>() { milk};
+
 			IDiscount milkDiscount = new MilkDiscount();
 			double result = milkDiscount.Apply(products);
-			Assert.AreEqual(result, -1.15);
+			Assert.AreEqual(result, 1.15);
 		}
 
 		[TestMethod]
 		public void TestApplyMilkDiscountForThreeMilks()
 		{
-			List<IProducts> products = new List<IProducts>() { new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15)};
+			IProduct milk = new Product(ProductType.Milk, 1.15, 3);
+			HashSet<IProduct> products = new HashSet<IProduct>() { milk };
+
 			IDiscount milkDiscount = new MilkDiscount();
 			double result = milkDiscount.Apply(products);
 			Assert.AreEqual(result, 0);
@@ -79,14 +80,12 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void TestApplyMilkDiscountForFiveMilks()
 		{
-			List<IProducts> products = new List<IProducts>() { new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15),
-																new Product(ProductType.Milk, 1.15)};
+			IProduct milk = new Product(ProductType.Milk, 1.15, 5);
+			HashSet<IProduct> products = new HashSet<IProduct>() { milk };
+
 			IDiscount milkDiscount = new MilkDiscount();
 			double result = milkDiscount.Apply(products);
-			Assert.AreEqual(result, -1.15);
+			Assert.AreEqual(result, 1.15);
 		}
 
 	}

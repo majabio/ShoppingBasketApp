@@ -8,10 +8,11 @@ namespace ShoppingBasketApp
 {
 	class Product : IProduct
 	{
-		public Product(ProductType type, double price)
+		public Product(ProductType type, double price, int count = 0)
 		{
 			Type = type;
 			Price = price;
+			Count = count;
 		}
 
 		private double price;
