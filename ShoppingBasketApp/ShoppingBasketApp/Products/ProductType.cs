@@ -1,7 +1,7 @@
 ﻿
 namespace ShoppingBasketApp
 {
-	public enum ProductType
+	internal enum ProductType
 	{
 		Bread, 
 		Butter, 

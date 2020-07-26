@@ -7,7 +7,7 @@ namespace ShoppingBasketApp
 	{
 		private const int appliable_amount = 4;
 
-		MilkDiscount()
+		internal MilkDiscount()
 		{
 			Type = DiscountType.Milk;
 		}

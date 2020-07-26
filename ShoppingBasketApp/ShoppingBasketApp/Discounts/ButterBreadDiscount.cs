@@ -9,7 +9,7 @@ namespace ShoppingBasketApp
 		private const int appliable_amount = 2;
 		private const double discount = 0.5;
 
-		ButterBreadDiscount()
+		internal ButterBreadDiscount()
 		{
 			Type = DiscountType.ButterBread;
 		}

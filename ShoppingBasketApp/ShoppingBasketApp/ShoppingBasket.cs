@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 
@@ -12,14 +13,14 @@ namespace ShoppingBasketApp
 		private double totalSum;
 		private InfoLogger logger;
 
-		ShoppingBasket(InfoLogger logger) 
+		internal ShoppingBasket(InfoLogger logger) 
 		{
 			this.logger = logger;
 			discounts = new List<IDiscount>();
 			products = new HashSet<IProduct>();
 		}
 
-		void AddProduct(ProductType type, int count = 1)
+		internal void AddProduct(ProductType type, int count = 1)
 		{
 			var product = products.First(p => p.Type == type);
 			if (null == product || count < 1)
@@ -28,7 +29,7 @@ namespace ShoppingBasketApp
 			totalSum += count * product.Price;
 		}
 
-		void RemoveProduct(ProductType type, int count = 1)
+		internal void RemoveProduct(ProductType type, int count = 1)
 		{
 			var product = products.First(p => p.Type == type);
 			if (null == product || count < 1 || count > product.Count)
@@ -37,17 +38,17 @@ namespace ShoppingBasketApp
 			totalSum -= count * product.Price;
 		}
 
-		void AddDiscount(IDiscount discount)
+		internal void AddDiscount(IDiscount discount)
 		{
 			discounts.Add(discount);
 		}
 
-		void RemoveDiscount(DiscountType type)
+		internal void RemoveDiscount(DiscountType type)
 		{
 			discounts.Remove(discounts.First(discount => discount.Type == type));
 		}
 
-		void CreateProduct(ProductType type, double price)
+		internal void CreateProduct(ProductType type, double price)
 		{
 			Product product = new Product(type, price);
 			if (products.Any(p => p.Type == type))
@@ -55,7 +56,7 @@ namespace ShoppingBasketApp
 			products.Add(product);
 		}
 
-		void DeleteProduct(ProductType type)
+		internal void DeleteProduct(ProductType type)
 		{
 			var product = products.First(p => p.Type == type);
 			if (product == null)
@@ -63,9 +64,19 @@ namespace ShoppingBasketApp
 			products.Remove(product);		
 		}
 
-		void Calculate()
+		internal void ProcessOrder()
 		{
-
+			foreach (IProduct product in products)
+				logger.Log(product.Type.ToString() + " " + product.Count + " " + product.Price + "\n");
+			logger.Log(totalSum.ToString());
+			foreach (IDiscount discount in discounts)
+			{
+				var discountResult = discount.Apply(products);
+				logger.Log("\n" + discount.Type.ToString() + "" + "-" + discountResult);
+				totalSum -= discountResult;
+			}
+			logger.Log("\n" + totalSum.ToString());
+			
 		}
 
 	}
