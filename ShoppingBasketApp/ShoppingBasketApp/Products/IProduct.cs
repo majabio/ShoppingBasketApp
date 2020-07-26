@@ -1,10 +1,6 @@
-﻿
-
-using System.Dynamic;
-using System.Runtime.InteropServices;
-
-namespace ShoppingBasketApp
+﻿namespace ShoppingBasketApp
 {
+	//not really needed
 	interface IProduct
 	{
 		ProductType Type { get; set; }

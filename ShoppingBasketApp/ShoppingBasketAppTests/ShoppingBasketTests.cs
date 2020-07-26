@@ -66,7 +66,7 @@ namespace ShoppingBasketAppTests
 			basket.CreateProduct(ProductType.Bread, 1.0);
 			basket.AddProduct(ProductType.Bread);
 			var product = basket.Products.First(p => p.Type == ProductType.Bread);
-			Assert.AreEqual(basket.TotalSum, 0.8);
+			Assert.AreEqual(basket.TotalSum, 1.0);
 		}
 
 		[TestMethod]
@@ -116,6 +116,7 @@ namespace ShoppingBasketAppTests
 		[TestMethod]
 		public void AddDiscountAddsDiscountToTheBasket()
 		{
+
 			ShoppingBasket basket = new ShoppingBasket(null);
 			IDiscount milkDiscount = new MilkDiscount();
 			basket.AddDiscount(milkDiscount);

@@ -14,7 +14,7 @@ namespace ShoppingBasketAppTests
 			Product butter = new Product(ProductType.Butter, 0.8);
 			Assert.AreEqual(bread.Type, ProductType.Bread);
 			Assert.AreEqual(milk.Type, ProductType.Milk);
-			Assert.AreEqual(butter, ProductType.Butter);
+			Assert.AreEqual(butter.Type, ProductType.Butter);
 		}
 
 		[TestMethod]

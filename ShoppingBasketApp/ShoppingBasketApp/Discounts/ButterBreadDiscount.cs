@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingBasketApp
@@ -18,9 +17,10 @@ namespace ShoppingBasketApp
 
 		public double Apply(IEnumerable<IProduct> products)
 		{
-			IProduct bread = products.First(p => p.Type == ProductType.Bread);
-			IProduct butter = products.First(p => p.Type == ProductType.Butter);
-			if (bread == null || butter == null)
+			IProduct bread = products?.FirstOrDefault(p => p.Type == ProductType.Bread);
+			IProduct butter = products?.FirstOrDefault(p => p.Type == ProductType.Butter);
+
+			if (null == butter|| null == bread)
 				return 0.0;
 
 			return butter.Count / appliable_amount * discount * bread.Price;

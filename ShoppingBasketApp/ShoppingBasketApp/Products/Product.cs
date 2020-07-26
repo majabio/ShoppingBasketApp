@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShoppingBasketApp
+﻿namespace ShoppingBasketApp
 {
 	class Product : IProduct
 	{
@@ -23,7 +17,7 @@ namespace ShoppingBasketApp
 			get { return price; }
 			set
 			{
-				if (price == value || price < min_price)
+				if (value == price || value < min_price)
 					return;
 				price = value;
 			}

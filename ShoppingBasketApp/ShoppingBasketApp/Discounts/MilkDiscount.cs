@@ -15,8 +15,8 @@ namespace ShoppingBasketApp
 
 		public double Apply(IEnumerable<IProduct> products)
 		{
-			IProduct milk = products.First(p => p.Type == ProductType.Milk);
-			if (milk == null)
+			IProduct milk = products?.FirstOrDefault(p => p.Type == ProductType.Milk);
+			if (null == milk)
 				return 0.0;
 			return milk.Count / appliable_amount * milk.Price;
 		}
